@@ -56,23 +56,33 @@ class CPU:
         }
 
     def HLT(self):
+        print("HLT")
+        print(self.pc)
         self.pc +=1
         self.running = False
         sys.exit()
 
 
     def LDI(self):
+        print("LDI")
+        print(self.pc)
         index = self.ram_read(self.pc + 1)
         value = self.ram_read(self.pc + 2)
         self.pc += 3
 
 
     def PRN(self):
+        print("PRN")
+        print(self.pc)
         index = self.ram_read(self.pc + 1)
         print(self.reg[index])
 
+        self.pc += 2
+
 
     def ADD(self):
+        print("ADD")
+        print(self.pc)
         num_1 = self.reg[self.ram_read(self.pc + 1)]
         num_2= self.reg[self.ram_read(self.pc + 2)]
 
@@ -81,6 +91,8 @@ class CPU:
 
 
     def SUB(self):
+        print("SUB")
+        print(self.pc)
         num_1 = self.reg[self.ram_read(self.pc + 1)]
         num_2 = self.reg[self.ram_read(self.pc + 2)]
 
@@ -89,6 +101,8 @@ class CPU:
 
 
     def MUL(self):
+        print("MUL")
+        print(self.pc)
         num_1 = self.reg[self.ram_read(self.pc + 1)]
         num_2 = self.reg[self.ram_read(self.pc + 2)]
 
@@ -97,6 +111,8 @@ class CPU:
 
 
     def DIV(self):
+        print("DIV")
+        print(self.pc)
         num_1 = self.reg[self.ram_read(self.pc + 1)]
         num_2 = self.reg[self.ram_read(self.pc + 2)]
 
@@ -105,6 +121,8 @@ class CPU:
 
 
     def CMP(self):
+        print("CMP")
+        print(self.pc)
         reg_1 = self.reg[self.ram_read(self.pc + 1)]
         reg_2 = self.reg[self.ram_read(self.pc + 2)]
 
@@ -117,13 +135,23 @@ class CPU:
         else:
             self.flag = EQUAL
 
+        self.pc += 3
+
+# JEQ
+# 12
+# ldi 0
+
 
     def JMP(self):
-        jump = self.ram_read(self.pc + 1)
+        print("JMP")
+        print(self.pc)
+        jump = self.reg[self.ram_read(self.pc + 1)]
         self.pc = jump
 
 
     def JEQ(self):
+        print("JEQ")
+        print(self.pc)
         if self.flag == EQUAL:
             self.pc = self.reg[self.ram_read(self.pc + 1)]
 
@@ -132,6 +160,8 @@ class CPU:
 
 
     def JNE(self):
+        print("JNE")
+        print(self.pc)
         if self.flag != EQUAL:
             self.pc = self.reg[self.ram_read(self.pc + 1)]
 
@@ -257,9 +287,6 @@ class CPU:
 
             if IR in self.branch_table:
                 self.branch_table[IR]()
-            else:
-                print('Not in branch table')
-                sys.exit()
 
 
 
